@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+        "id": "1",
+        "text": "Give Ashley and Andrew Hugs",
+        "day": "Dec 22nd at 9:00 AM",
+        "reminder": true
+    },
+    {
+        "id": "2",
+        "text": "Doctor Appointment",
+        "day": "Dec 23nd at 9:00 AM",
+        "reminder": true
+    },    
+    {
+        "id": "3",
+        "text": "Give Pumkin a Bath",
+        "day": "Dec 24nd at 9:00 AM",
+        "reminder": true
+    },    
+    {
+        "id": "4",
+        "text": "Christmas With the Family",
+        "day": "Dec 22nd at 9:00 AM",
+        "reminder": false
+    }
+  ]
+}

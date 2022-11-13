@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
@@ -8,41 +8,21 @@ const App = () => {
   // Controls the state of text boxes for Task and Day and Time
   const [showAddTask, setShowAddTask ] = useState(false)
   
-  const [tasks, setTasks ] = useState([
-    {
-        id: 1,
-        text: 'Give Ashley and Andrew Hugs',
-        day: 'Dec 22nd at 9:00 AM',
-        reminder: true,
-    },
-    {
-        id: 2,
-        text: 'Meeting at School',
-        day: 'Feb 6th at 1:30 PM',
-        reminder: true,
-    },
-    {
-        id: 3,
-        text: 'Christmas Break',
-        day: 'Dec 22nd at 9:00 AM',
-        reminder: true,
-    },  
-    {
-        id: 4,
-        text: 'Food Shopping',
-        day: 'Feb 6th at 2:30 PM',
-        reminder: false,
-    },
-    {
-        id: 5,
-        text: 'Food Shopping',
-        day: 'Feb 6th at 2:30 PM',
-        reminder: false,
-    }
-])
+  const [tasks, setTasks ] = useState([])
 
-// Add Task
-const addTask = (task) => {
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const res = await fetch('http://localhost:5000/tasks')  // use this with any backend!!
+      const data = await res.json()
+
+      console.log(data)
+    }
+    fetchTasks()
+  }, [])
+
+  // Add Task
+  const addTask = (task) => {
   // Generate a random task id /  transaction id / job id: 
   // Need to replace the random generated IDS with an actual database
   const id = Math.floor(Math.random() * 10000) + 1
@@ -50,13 +30,13 @@ const addTask = (task) => {
   setTasks([...tasks, newTask])
 }
 
-// Delete task
-const deleteTask = (id) => {
+  // Delete task
+  const deleteTask = (id) => {
   setTasks(tasks.filter((task) => task.id !== id))
 }
 
-// Toogle Reminder
-const toggleReminder = (id) => {
+  // Toogle Reminder
+  const toggleReminder = (id) => {
   setTasks(
     tasks.map((task) => 
     task.id === id ? {...task, reminder: !task.reminder } : task))
