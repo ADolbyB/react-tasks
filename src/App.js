@@ -21,7 +21,7 @@ const App = () => {
         text: 'Christmas Break',
         day: 'Dec 22nd at 9:00 AM',
         reminder: true,
-    },
+    },  
     {
         id: 4,
         text: 'Food Shopping',
@@ -40,13 +40,18 @@ const App = () => {
 const deleteTask = (id) => {
   setTasks(tasks.filter((task) => task.id !== id))
 }
+
+// Toogle Reminder
+const toggleReminder = (id) => {
+  console.log(id)
+}
   
   return (
     <div className="container">
       <Header />
       {tasks.length > 0 ? (
       <Tasks tasks={tasks} onDelete=
-      {deleteTask}/>
+      {deleteTask} onToggle={toggleReminder}/>
     
   ) : (
     'No Tasks To Show'
