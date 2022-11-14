@@ -6,40 +6,85 @@ import AddTask from './components/AddTask'
 const App = () => {
   
   // Controls the state of text boxes for Task and Day and Time
-  const [showAddTask, setShowAddTask ] = useState(false)
+  const [ showAddTask, setShowAddTask ] = useState(false)
   
-  const [tasks, setTasks ] = useState([])
-
+  const [ tasks, setTasks ] = useState([])
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      const res = await fetch('http://localhost:5000/tasks')  // use this with any backend!!
-      const data = await res.json()
-
-      console.log(data)
+    const getTasks = async () => {
+      const tasksFromServer = await fetchTasks()
+      setTasks(tasksFromServer)
     }
-    fetchTasks()
+    getTasks()
   }, [])
 
+  // Fetch Tasks from backend
+  const fetchTasks = async () => {
+    const res = await fetch('http://localhost:5000/tasks')  // use this with any backend!!
+    const data = await res.json()
+
+    //console.log(data) //DEBUG
+    return data
+  }
+
+    // Fetch Single Task from backend
+    const fetchTask = async (id) => {
+      const res = await fetch(`http://localhost:5000/tasks/${id}`)  // use this with any backend!!
+      const data = await res.json()
+  
+      //console.log(data) //DEBUG
+      return data
+    }
+
   // Add Task
-  const addTask = (task) => {
-  // Generate a random task id /  transaction id / job id: 
-  // Need to replace the random generated IDS with an actual database
-  const id = Math.floor(Math.random() * 10000) + 1
-  const newTask = { id, ...task }
-  setTasks([...tasks, newTask])
+  const addTask = async (task) => {
+    const res = await fetch('http://localhost:5000/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-type' : 'application/json'
+      },
+      body: JSON.stringify(task)
+    })
+
+    //return new task added
+    const data = await res.json()
+
+    setTasks([...tasks, data])
+  // // Generate a random task id /  transaction id / job id: 
+  // // Need to replace the random generated IDS with an actual database
+  // const id = Math.floor(Math.random() * 10000) + 1
+  // const newTask = { id, ...task }
+  // setTasks([...tasks, newTask])
 }
 
   // Delete task
-  const deleteTask = (id) => {
-  setTasks(tasks.filter((task) => task.id !== id))
+  const deleteTask = async (id) => {
+    await fetch(`http://localhost:5000/tasks/${id}`, { 
+      method: 'DELETE' 
+    })
+    setTasks(tasks.filter((task) => task.id !== id))
 }
 
   // Toogle Reminder
-  const toggleReminder = (id) => {
-  setTasks(
-    tasks.map((task) => 
-    task.id === id ? {...task, reminder: !task.reminder } : task))
+  const toggleReminder = async (id) => {
+
+    const taskToToggle = await fetchTask(id)
+    const updateTask = {
+      ...taskToToggle, reminder: !taskToToggle.reminder
+      }
+
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method:'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(updateTask)
+    })
+
+    setTasks(
+      tasks.map((task) => 
+      task.id === id ? {...task, reminder: !task.reminder } : task
+    ))
 }
 
 return (
