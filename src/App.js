@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 
@@ -81,9 +82,11 @@ const App = () => {
       body: JSON.stringify(updateTask)
     })
 
+    const data = await res.json()   // In full stack, we need our own REST API and framework
+
     setTasks(
       tasks.map((task) => 
-      task.id === id ? {...task, reminder: !task.reminder } : task
+      task.id === id ? {...task, reminder: data.reminder } : task
     ))
 }
 
@@ -97,6 +100,7 @@ return (
   ) : (
     'No Tasks To Show'
   )}
+  <Footer />
   </div>
   )
 }
