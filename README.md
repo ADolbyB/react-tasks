@@ -2,6 +2,8 @@
 
 A simple task tracker using React
 
+A Function and Hook Based [React JS Crash Course](https://www.youtube.com/watch?v=w7ejDZ8SWv8) tutorial I completed as part of project research.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
