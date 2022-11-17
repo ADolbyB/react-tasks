@@ -1,3 +1,28 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "text": "Play With Pumpkin",
+      "day": "All Day",
+      "reminder": true,
+      "id": 3
+    },
+    {
+      "text": "Pretty Quick ",
+      "day": "with a Fake Backend as a test",
+      "reminder": false,
+      "id": 4
+    },
+    {
+      "text": "Take Ashley to the Movies",
+      "day": "Tonight",
+      "reminder": true,
+      "id": 5
+    },
+    {
+      "text": "Bring Back Stolen Eleanor",
+      "day": "Tomorrow...",
+      "reminder": false,
+      "id": 6
+    }
+  ]
 }
